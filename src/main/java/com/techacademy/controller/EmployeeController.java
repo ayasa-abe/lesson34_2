@@ -98,6 +98,48 @@ public class EmployeeController {
         return "redirect:/employees";
     }
 
+ // 従業員更新画面
+ 	@GetMapping(value = "/{code}/update")
+ 	public String edit(@PathVariable("code") String code,@ModelAttribute Employee employee, Model model) {
+ 		if (code != null) {
+ 			employee = employeeService.findByCode(code);
+ 		}
+ 		model.addAttribute("code",employee.getCode());
+ 		employee.setPassword("");
+ 		model.addAttribute("employee",employee);
+
+ 		// 従業員更新画面に遷移
+ 		return "employees/update";
+ 	}
+
+ 	/** 従業員更新処理 */
+ 	@PostMapping(value = "/{code}/update")
+ 	public String update(@PathVariable("code") String code, @Validated Employee employee, BindingResult res, Model model) {
+ 		// 入力チェック
+ 		if (res.hasErrors()) {
+ 			return edit(null,employee,model);
+ 		}
+
+ 		// employeeService.updateを呼び出す
+ 		ErrorKinds result = employeeService.update(employee,code);
+ 		// もしチェックNGだった場合（戻り値がErrorKinds.CHECK_OKじゃない場合）、従業員更新画面に戻る
+ 		if (ErrorMessage.contains(result)) {
+ 			 model.addAttribute(ErrorMessage.getErrorName(result), ErrorMessage.getErrorValue(result));
+ 			    return "employees/update";
+ 		}
+
+ 	    model.addAttribute("employee", employeeService.findByCode(code));
+ 	    if ("".equals(employee.getName())) {
+ 	    	//　氏名が空白だった場合
+ 	    	model.addAttribute(ErrorMessage.getErrorName(ErrorKinds.BLANK_ERROR),
+ 	    			ErrorMessage.getErrorValue(ErrorKinds.BLANK_ERROR));
+
+ 	    	return edit(employee.getCode(),employee,model);
+ 	    }
+
+ 		    return "redirect:/employees";
+ 		}
+
     // 従業員削除処理
     @PostMapping(value = "/{code}/delete")
     public String delete(@PathVariable("code") String code, @AuthenticationPrincipal UserDetail userDetail, Model model) {
