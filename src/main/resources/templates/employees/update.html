@@ -23,7 +23,7 @@
                 <span>パスワードは変更する場合のみ入力してください</span>
               </div>
                 <div class="card-body">
-                 <form th:action="@{/employees/{code}/update}" th:object="${employee}" th:method="post">
+                 <form th:action="@{/employees/{code}/update(code=${employee.code})}" th:object="${employee}" th:method="post">
                 <div class="wizard wizard-success mb-4">
                 <div class="mb-3">
                   <label class="form-label" for="code">社員番号</label>

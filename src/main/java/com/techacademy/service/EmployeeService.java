@@ -57,6 +57,12 @@ public class EmployeeService {
 
  			if("".equals(employee.getPassword())) {
  				employee.setPassword(emp.getPassword());
+ 			  if(emp != null) {
+ 				  emp.getPassword();
+ 			  } else {
+ 				  // nullの場合の処理
+ 				  System.out.println("empはnullです");
+ 		     	}
  			}
 
  			else {
