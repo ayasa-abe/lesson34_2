@@ -78,9 +78,8 @@ public class ReportController {
 	@PostMapping(value = "/add")
 	public String add(@Validated Report report, BindingResult res, Model model,
 			@AuthenticationPrincipal UserDetail userDetail) {
-
+		report.setEmployee(userDetail.getEmployee());
 		if (res.hasErrors()) {
-			report.setEmployee(userDetail.getEmployee());
 			return create(report, model, userDetail);
 		}
 
