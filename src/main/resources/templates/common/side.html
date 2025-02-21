@@ -8,8 +8,6 @@
         <li sec:authorize="hasAuthority('ADMIN')">
             <a class="text-light" th:href="@{/reports}">日報</a>
         <li sec:authorize="hasAuthority('GENERAL')">
-            <a class="text-light" th:href="@{/employees}">従業員</a>
-        <li sec:authorize="hasAuthority('GENERAL')">
             <a class="text-light" th:href="@{/reports}">日報</a>
         </li>
     </ul>

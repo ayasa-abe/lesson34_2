@@ -44,11 +44,13 @@ public class Report {
 
     // タイトル
     @Column(columnDefinition="VARCHAR(100)", nullable = false)
+    @Length(max = 100)
     @NotEmpty
     private String title;
 
     // 内容
     @Column(columnDefinition="LONGTEXT", nullable = false)
+    @Length(max = 600)
     @NotEmpty
     private String content;
 

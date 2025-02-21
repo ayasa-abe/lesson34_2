@@ -27,8 +27,8 @@
                                      <div class="col-md-7">
                                          <!-- 既存の報告日を表示 -->
                                          <input class="form-control" type="date" th:field="*{reportDate}" th:errorclass="err" id="reportDate">
-                                         <span th:text="${reportDate}" class="text-danger"></span>
-                                         <span th:if="${codeError} neq null" th:text="${codeError}" class="text-danger"></span>
+                                         <span  th:errors="*{reportDate}" class="text-danger"></span>
+                                         <span th:if="${reportDateError} neq null" th:text="${reportDateError}" class="text-danger"></span>
                                      </div>
                                 </div>
                                 <div class="mb-3">

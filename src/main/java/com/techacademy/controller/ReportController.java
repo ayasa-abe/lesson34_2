@@ -64,7 +64,7 @@ public class ReportController {
 	// 日報新規登録画面
 	@GetMapping(value = "/add")
 	public String create(Report report, Model model, @AuthenticationPrincipal UserDetail userDetail) {
-		if (userDetail != null) {
+		if (report.getEmployee() == null) {
 			report = new Report();
 			report.setEmployee(userDetail.getEmployee());
 		}
@@ -80,14 +80,15 @@ public class ReportController {
 			@AuthenticationPrincipal UserDetail userDetail) {
 
 		if (res.hasErrors()) {
-			return create(report, model, null);
+			report.setEmployee(userDetail.getEmployee());
+			return create(report, model, userDetail);
 		}
 
 		ErrorKinds result = reportService.save(report, userDetail);
 
 		if (ErrorMessage.contains(result)) {
 			model.addAttribute(ErrorMessage.getErrorName(result), ErrorMessage.getErrorValue(result));
-			return create(report, model, null);
+			return create(report, model, userDetail);
 		}
 
 		return "redirect:/reports";
